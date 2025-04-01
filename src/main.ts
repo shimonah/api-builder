@@ -22,6 +22,13 @@ async function bootstrap() {
   
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 3073;
+
+  // Enable CORS
+  app.enableCors({
+    origin: 'http://localhost:3000', // Your Next.js app's URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   
   // Explicitly specify host to listen on all interfaces
   await app.listen(port, '0.0.0.0');
