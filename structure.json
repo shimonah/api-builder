@@ -1,0 +1,60 @@
+{
+  "integrationCode": "payment_transaction_query",
+  "name": "Payment Transaction Check",
+  "description": "Query transaction details from payment gateway",
+  "version": "1.0.0",
+  "createdAt": "2025-04-01T10:00:00Z",
+  "updatedAt": "2025-04-01T10:00:00Z",
+  "active": true,
+  "type": "rest",
+  "request": {
+    "method": "GET",
+    "baseUrl": "https://gateway.payment.com/api/v2/",
+    "path": "transactions/{transactionId}",
+    "pathParams": [
+      {
+        "key": "transactionId",
+        "value": "10000002"
+      }
+    ],
+    "queryParams": [],
+    "headers": [
+      {
+        "key": "Content-Type",
+        "value": "application/json"
+      },
+      {
+        "key": "x-api-key",
+        "value": "123-abc-123-abc"
+      }
+    ],
+    "body": null
+  },
+  "response": {
+    "expectedStatus": [200],
+    "validation": {
+      "mode": "all",  // "all" or "any" - whether all conditions must pass or just any one
+      "conditions": [
+        {
+          "path": "$.status",
+          "operator": "equals", // equals, notEquals, contains, greaterThan, lessThan, exists, regex
+          "value": "paid"
+        },
+        {
+          "path": "$.amount",
+          "operator": "greaterThan",
+          "value": 0
+        }
+      ]
+    },
+    "onValidationSuccess": {
+      "action": "return",  // "return", "forward", "notify"
+      "data": "transformed"  // "transformed", "original", "custom"
+    },
+    "onValidationFailure": {
+      "action": "return",  // "error", "return", "forward", "notify"
+      "errorMessage": "Transaction not in paid status",
+      "errorCode": "TRANSACTION_NOT_PAID"
+    }
+  }
+}
