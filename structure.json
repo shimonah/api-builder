@@ -1,5 +1,6 @@
 {
   "integrationCode": "payment_transaction_query",
+  "endpointUrl": "payment/transaction/validate",
   "name": "Payment Transaction Check",
   "description": "Query transaction details from payment gateway",
   "version": "1.0.0",
@@ -8,8 +9,8 @@
   "active": true,
   "type": "rest",
   "input": {
-    "schema": {
-      "type": "object",
+    "method": "GET", // GET, POST, PUT, DELETE
+    "dataType": "object",
       "properties": {
         "transactionId": {
           "type": "string",
@@ -22,8 +23,7 @@
           "default": false
         }
       }
-    }
-  },
+    },
   "request": {
     "method": "GET",
     "baseUrl": "https://gateway.payment.com/api/v2/",
@@ -66,12 +66,18 @@
     },
     "onValidationSuccess": {
       "action": "return",  // "return", "forward", "notify"
+      "httpCode": 200,
       "data": "transformed"  // "transformed", "original", "custom"
     },
     "onValidationFailure": {
+      "action": "return",
+      "httpCode": 200,
+      "data": "Transaction not in paid status"
+    },
+    "onError": {
       "action": "return",  // "error", "return", "forward", "notify"
-      "errorMessage": "Transaction not in paid status",
-      "errorCode": "TRANSACTION_NOT_PAID"
+      "httpCode": 500, // 400, 401, 403, 404, 500
+      "data": "Internal server error"
     }
   }
 }
