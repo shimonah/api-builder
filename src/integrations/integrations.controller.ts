@@ -3,19 +3,19 @@ import { IntegrationsService } from './integrations.service';
 import { CreateIntegrationDto } from './dto/create-integration.dto';
 import { Integration } from './entities/integration.entity';
 
-@Controller('integration')
+@Controller('integrations')
 export class IntegrationsController {
   constructor(private readonly integrationsService: IntegrationsService) {}
+
+  @Get('list')
+  async findAll(): Promise<Integration[]> {
+    return this.integrationsService.findAll();
+  }
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createIntegrationDto: CreateIntegrationDto): Promise<Integration> {
     return this.integrationsService.create(createIntegrationDto);
-  }
-
-  @Get('list')
-  async findAll(): Promise<Integration[]> {
-    return this.integrationsService.findAll();
   }
 
   @Get(':integrationCode')
