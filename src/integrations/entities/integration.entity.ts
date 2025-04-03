@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToMany } from 'typeorm';
+import { Connection } from '../../connections/entities/connection.entity';
+import { Endpoint } from '../../endpoints/entities/endpoint.entity';
 
 @Entity('integrations')
 export class Integration {
@@ -34,4 +36,10 @@ export class Integration {
 
   @Column('jsonb')
   response: any;
+
+  @ManyToMany(() => Endpoint, endpoint => endpoint.integrations)
+  endpoints: Endpoint[];
+
+  @OneToMany(() => Connection, connection => connection.integration)
+  connections: Connection[];
 } 

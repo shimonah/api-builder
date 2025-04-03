@@ -2,7 +2,15 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { IntegrationsModule } from './integrations/integrations.module';
+import { EndpointsModule } from './endpoints/endpoints.module';
+import { InputsModule } from './inputs/inputs.module';
+import { RulesModule } from './rules/rules.module';
+import { ConnectionsModule } from './connections/connections.module';
 import { Integration } from './integrations/entities/integration.entity';
+import { Endpoint } from './endpoints/entities/endpoint.entity';
+import { Input } from './inputs/entities/input.entity';
+import { Rule } from './rules/entities/rule.entity';
+import { Connection } from './connections/entities/connection.entity';
 
 @Module({
   imports: [
@@ -19,11 +27,15 @@ import { Integration } from './integrations/entities/integration.entity';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Integration],
+        entities: [Integration, Endpoint, Input, Rule, Connection],
         synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
       }),
     }),
     IntegrationsModule,
+    EndpointsModule,
+    InputsModule,
+    RulesModule,
+    ConnectionsModule,
   ],
 })
 export class AppModule {}

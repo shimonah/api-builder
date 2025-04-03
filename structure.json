@@ -9,7 +9,7 @@
   "active": true,
   "type": "rest",
   "input": {
-    "method": "GET", // GET, POST, PUT, DELETE
+    "method": "GET",
     "dataType": "object",
       "properties": {
         "transactionId": {
@@ -50,11 +50,11 @@
   "response": {
     "expectedStatus": [200],
     "validation": {
-      "mode": "all",  // "all" or "any" - whether all conditions must pass or just any one
+      "mode": "all",
       "conditions": [
         {
           "path": "$.status",
-          "operator": "equals", // equals, notEquals, contains, greaterThan, lessThan, exists, regex
+          "operator": "equals",
           "value": "paid"
         },
         {
@@ -65,9 +65,9 @@
       ]
     },
     "onValidationSuccess": {
-      "action": "return",  // "return", "forward", "notify"
+      "action": "return",
       "httpCode": 200,
-      "data": "transformed"  // "transformed", "original", "custom"
+      "data": "transformed"
     },
     "onValidationFailure": {
       "action": "return",
@@ -75,8 +75,8 @@
       "data": "Transaction not in paid status"
     },
     "onError": {
-      "action": "return",  // "error", "return", "forward", "notify"
-      "httpCode": 500, // 400, 401, 403, 404, 500
+      "action": "return",
+      "httpCode": 500,
       "data": "Internal server error"
     }
   }
