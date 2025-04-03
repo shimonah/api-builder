@@ -28,6 +28,14 @@ export class SchemaDto {
 }
 
 export class CreateInputDto {
+  @IsNotEmpty()
+  @IsString()
+  code: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
   @IsOptional()
   @IsNumber()
   endpoint_id?: number;

@@ -96,4 +96,17 @@ export class InputsService {
     const input = await this.findOne(id);
     await this.inputsRepository.remove(input);
   }
+
+  async findByCode(code: string): Promise<Input> {
+    const input = await this.inputsRepository.findOne({
+      where: { code },
+      relations: ['endpoints'],
+    });
+
+    if (!input) {
+      throw new NotFoundException(`Input with code ${code} not found`);
+    }
+
+    return input;
+  }
 } 

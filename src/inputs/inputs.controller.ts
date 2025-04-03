@@ -24,6 +24,11 @@ export class InputsController {
     return this.inputsService.findOne(+id);
   }
 
+  @Get('code/:code')
+  async findByCode(@Param('code') code: string): Promise<Input> {
+    return this.inputsService.findByCode(code);
+  }
+
   @Get('endpoint/:endpointId')
   async findByEndpointId(@Param('endpointId') endpointId: string): Promise<Input[]> {
     return this.inputsService.findByEndpointId(+endpointId);
