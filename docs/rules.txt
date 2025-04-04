@@ -1,7 +1,5 @@
 RULES API DOCUMENTATION
 
-Note: Based on the provided code, I don't have complete information about the Rules API implementation. The following documentation is inferred from the entity relationships and module structure.
-
 BASE URL: /rules
 
 1. CREATE RULE

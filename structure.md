@@ -4,6 +4,8 @@ rules entity (e.g. can be used in other endpoints)
 integration entity (include request, response - currently response has validation rules)
 
 
+To add:
+users entity to track how create records
+rate limit
+backlist
 
-
-TODO: I need to has separate validation rules entity?
