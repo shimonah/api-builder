@@ -34,7 +34,6 @@ export class RulesService {
   }
 
   async findOne(id: number): Promise<Rule> {
-    console.log(id);
     const rule = await this.rulesRepository.findOne({
       where: { id },
       relations: [],
