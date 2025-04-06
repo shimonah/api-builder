@@ -12,21 +12,23 @@ export class Rule {
   @Column({ nullable: true })
   description: string;
 
-  @Column('jsonb')
-  rules: {
-    condition: {
-      operator: string;
-      value: string | number | boolean;
-    };
-    integration_code: string;
-    priority: number;
-  }[];
+  @Column({ default: true })
+  active: boolean;
+
+  @Column()
+  logical_operator: string;
 
   @Column('jsonb')
-  default: {
-    integration_code: string;
-    priority: number;
-  };
+  conditions: {
+    property_value: string;
+    property_type: string;
+    operator: string;
+    value: string;
+    transform: string;
+  }[];
+
+  @Column()
+  integration_code: string;
 
   @ManyToMany(() => Endpoint, endpoint => endpoint.rules)
   endpoints: Endpoint[];

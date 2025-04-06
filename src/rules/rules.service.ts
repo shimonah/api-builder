@@ -18,6 +18,14 @@ export class RulesService {
     const { endpoint_id, ...ruleData } = createRuleDto;
     const rule = this.rulesRepository.create(ruleData);
 
+    if (endpoint_id) {
+      const endpoint = await this.endpointsService.findById(endpoint_id);
+      if (!rule.endpoints) {
+        rule.endpoints = [];
+      }
+      rule.endpoints.push(endpoint);
+    }
+
     return await this.rulesRepository.save(rule);
   }
 
@@ -26,6 +34,7 @@ export class RulesService {
   }
 
   async findOne(id: number): Promise<Rule> {
+    console.log(id);
     const rule = await this.rulesRepository.findOne({
       where: { id },
       relations: [],

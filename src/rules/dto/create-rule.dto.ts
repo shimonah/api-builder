@@ -1,39 +1,25 @@
-import { IsNotEmpty, IsString, IsObject, IsNumber, IsArray, IsOptional, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsString, IsBoolean, IsArray, IsOptional, ValidateNested, IsEnum, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ConditionDto {
   @IsNotEmpty()
   @IsString()
+  property_value: string;
+
+  @IsNotEmpty()
+  @IsString()
+  property_type: string;
+
+  @IsNotEmpty()
+  @IsString()
   operator: string;
 
   @IsNotEmpty()
-  value: string | number | boolean;
-}
-
-export class RuleItemDto {
-  @IsNotEmpty()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => ConditionDto)
-  condition: ConditionDto;
-
-  @IsNotEmpty()
   @IsString()
-  integration_code: string;
+  value: string;
 
-  @IsNotEmpty()
-  @IsNumber()
-  priority: number;
-}
-
-export class DefaultRuleDto {
-  @IsNotEmpty()
   @IsString()
-  integration_code: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  priority: number;
+  transform: string;
 }
 
 export class CreateRuleDto {
@@ -49,15 +35,22 @@ export class CreateRuleDto {
   @IsString()
   description?: string;
 
+  @IsOptional()
+  @IsBoolean()
+  active?: boolean = true;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsEnum(['AND', 'OR'])
+  logical_operator: string;
+
   @IsNotEmpty()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => RuleItemDto)
-  rules: RuleItemDto[];
+  @Type(() => ConditionDto)
+  conditions: ConditionDto[];
 
   @IsNotEmpty()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => DefaultRuleDto)
-  default: DefaultRuleDto;
+  @IsString()
+  integration_code: string;
 } 
