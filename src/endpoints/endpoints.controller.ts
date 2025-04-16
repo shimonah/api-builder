@@ -24,6 +24,11 @@ export class EndpointsController {
     return this.endpointsService.findByCode(endpoint_code);
   }
 
+  @Get('id/:id')
+  async findById(@Param('id') id: number): Promise<Endpoint> {
+    return this.endpointsService.findById(id);
+  }
+
   @Put(':code')
   async update(
     @Param('code') endpoint_code: string,
