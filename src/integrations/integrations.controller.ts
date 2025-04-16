@@ -1,6 +1,7 @@
 import { Controller, Post, Body, Get, Param, Put, HttpCode, HttpStatus } from '@nestjs/common';
 import { IntegrationsService } from './integrations.service';
 import { CreateIntegrationDto } from './dto/create-integration.dto';
+import { UpdateIntegrationDto } from './dto/update-integration.dto';
 import { Integration } from './entities/integration.entity';
 
 @Controller('integrations')
@@ -21,5 +22,13 @@ export class IntegrationsController {
   @Get(':integrationCode')
   async findByCode(@Param('integrationCode') integrationCode: string): Promise<Integration> {
     return this.integrationsService.findByCode(integrationCode);
+  }
+
+  @Put(':integrationCode')
+  async update(
+    @Param('integrationCode') integrationCode: string,
+    @Body() updateIntegrationDto: UpdateIntegrationDto,
+  ): Promise<Integration> {
+    return this.integrationsService.update(integrationCode, updateIntegrationDto);
   }
 }
